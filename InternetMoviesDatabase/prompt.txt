@@ -1,0 +1,1 @@
+Remplis le fichier database/seeders/MovieSeeder.php avec 10 films Star Wars (DVD/Collector) et 10 d'animation. Utilise des prix variés et des images Unsplash.
