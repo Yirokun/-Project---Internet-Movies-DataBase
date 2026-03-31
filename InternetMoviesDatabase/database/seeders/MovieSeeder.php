@@ -23,7 +23,7 @@ class MovieSeeder extends Seeder
                 'category' => 'Science-Fiction',
                 'description' => 'Le début de la saga Skywalker alors qu\'un jeune Anakin est découvert sur Tatooine.',
                 'price' => 19.99,
-                'image' => 'https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=800',
+                'image' => 'images/starwarsep1.jpg',
             ],
             [
                 'title' => 'Star Wars: Épisode I - La Menace Fantôme (Édition Collector)',
