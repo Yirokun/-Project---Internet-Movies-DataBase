@@ -1,0 +1,12 @@
+{
+    "mcpServers": {
+        "laravel-boost": {
+            "command": "wsl.exe",
+            "args": [
+                "/home/chopp/.config/herd-lite/bin/php",
+                "/home/chopp/Project---Internet-Movies-DataBase/InternetMoviesDatabase/artisan",
+                "boost:mcp"
+            ]
+        }
+    }
+}
