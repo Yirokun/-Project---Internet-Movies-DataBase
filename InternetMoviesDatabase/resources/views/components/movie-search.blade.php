@@ -22,29 +22,56 @@ new class extends Component
     }
 }; ?>
 
-<div class="p-6">
-    <div class="mb-10 max-w-md mx-auto">
+<div class="max-w-6xl mx-auto px-6 py-12">
+    <div class="mb-12 max-w-md mx-auto">
         <input 
             wire:model.live.debounce.300ms="search" 
             type="text" 
-            placeholder="Recherche" 
-            class="w-full px-6 py-3 rounded-full bg-gray-800 border-2 border-yellow-500 text-white outline-none"
+            placeholder="Rechercher un film..." 
+            class="w-full bg-[#0A0A0A] border border-white/10 rounded-full px-6 py-3 text-sm focus:outline-none focus:border-yellow-500/50 transition-all text-gray-300 outline-none shadow-xl"
         >
     </div>
 
-    @forelse($movies as $movie)
-    <a href="/movie/{{ $movie->id }}" class="group shadow-2xl">
-        <div class="bg-gray-900 rounded-xl overflow-hidden border border-gray-800 group-hover:border-yellow-500 transition-all duration-300">
-            <div class="relative h-72">
-                <img src="{{ $movie->image }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black p-4 text-white">
-                    <h2 class="text-xl font-bold">{{ $movie->title }}</h2>
+   
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+        
+        @forelse($movies as $movie)
+            {{-- Carte du film --}}
+            <a href="/movie/{{ $movie->id }}" class="group bg-[#0A0A0A] border border-white/5 rounded-2xl overflow-hidden hover:border-yellow-500/50 transition-all duration-500 shadow-2xl">
+                
+                <div class="relative aspect-[2/3] overflow-hidden">
+                    <img src="{{ asset($movie->image) }}" 
+                         alt="{{ $movie->title }}" 
+                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80 group-hover:opacity-100">
+                    
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-60"></div>
+                    
+                    {{-- Badge Prix --}}
+                    <div class="absolute bottom-4 right-4 bg-black/80 backdrop-blur-md border border-white/10 px-3 py-1 rounded-lg">
+                        <span class="text-yellow-500 font-bold text-sm">{{ $movie->price }} €</span>
+                    </div>
                 </div>
-            </div>
-            </div>
-    </a>
-@empty
-    @endforelse
-</div>
 
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-[10px] uppercase tracking-widest text-gray-600 font-bold italic">
+                            {{ $movie->category }}
+                        </span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white group-hover:text-yellow-500 transition-colors uppercase tracking-tight">
+                        {{ $movie->title }}
+                    </h3>
+                    <p class="text-gray-500 text-xs mt-3 line-clamp-2 font-light leading-relaxed">
+                        {{ $movie->description }}
+                    </p>
+                </div>
+            </a>
+        @empty
+            <div class="col-span-full py-24 text-center border-2 border-dashed border-white/5 rounded-3xl">
+                <p class="text-gray-600 uppercase tracking-widest text-sm font-bold">Transmission interrompue : Aucun film trouvé</p>
+            </div>
+        @endforelse
+
+    </div>
+</div>
 
