@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ $movie->title }} - Star Wars Database</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-black text-white">
+@extends('app')
 
+@section('title', $movie->title . ' - Star Wars Database')
+
+@section('content')
     <div class="relative h-[500px] w-full overflow-hidden">
         <img src="{{ asset($movie->image) }}" alt="{{ $movie->title }}" class="w-full h-full object-cover opacity-30 blur-sm absolute">
         <div class="absolute inset-0 bg-gradient-to-t from-black"></div>
@@ -62,6 +58,4 @@
 </div>
         </div>
     </main>
-
-</body>
-</html>
+@endsection
