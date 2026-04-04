@@ -15,6 +15,12 @@
                     <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
                         {{ __('Home') }}
                     </x-nav-link>
+                    @auth
+                    <x-nav-link :href="route('cart')" :active="request()->routeIs('cart')" class="flex items-center gap-2 group">
+                        <span>{{ __('Panier') }}</span>
+                        <livewire:cart-counter />
+                    </x-nav-link>
+                    @endauth
                 </div>
             </div>
 

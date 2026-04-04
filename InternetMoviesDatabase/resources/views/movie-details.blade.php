@@ -50,6 +50,8 @@
             <div class="pt-6 border-t border-gray-800">
     <span class="text-4xl font-black text-yellow-500">{{ $movie->price }} €</span>
     
+    <livewire:add-cart-button :movie-id="$movie->id" />
+
     @if($movie->category === 'Collector')
         <p class="text-xs text-gray-500 mt-1 uppercase tracking-widest animate-pulse">
             Prix de l'édition collector

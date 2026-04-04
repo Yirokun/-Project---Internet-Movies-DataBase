@@ -1,6 +1,7 @@
 <?php
 
 use Livewire\Component;
+use App\Models\CartItem;
 use App\Models\Movie;
 use Livewire\Attributes\Layout;
 
@@ -20,6 +21,17 @@ new class extends Component
             'movies' => $movies,
         ];
     }
+
+    public function addToCart($movieId)
+    {
+        if (!auth()->check()) {
+            return $this->redirect(route('login'), navigate: true);
+        }
+
+        CartItem::firstOrCreate(['user_id' => auth()->id(), 'movie_id' => $movieId]);
+
+        $this->dispatch('cart-updated');
+    }
 }; ?>
 
 <div class="max-w-6xl mx-auto px-6 py-12">
@@ -37,7 +49,8 @@ new class extends Component
         
         @forelse($movies as $movie)
             {{-- Carte du film --}}
-            <a href="/movie/{{ $movie->id }}" class="group bg-[#0A0A0A] border border-white/5 rounded-2xl overflow-hidden hover:border-yellow-500/50 transition-all duration-500 shadow-2xl">
+            <div class="relative group bg-[#0A0A0A] border border-white/5 rounded-2xl overflow-hidden hover:border-yellow-500/50 transition-all duration-500 shadow-2xl flex flex-col">
+                <a href="{{ route('movie.show', $movie->id) }}" class="absolute inset-0 z-10" aria-label="Voir les détails de {{ $movie->title }}"></a>
                 
                 <div class="relative aspect-[2/3] overflow-hidden">
                     <img src="{{ asset($movie->image) }}" 
@@ -64,8 +77,15 @@ new class extends Component
                     <p class="text-gray-500 text-xs mt-3 line-clamp-2 font-light leading-relaxed">
                         {{ $movie->description }}
                     </p>
+
+                    <button 
+                        wire:click.stop="addToCart({{ $movie->id }})"
+                        class="relative z-20 w-full mt-6 py-3 border border-yellow-500/30 text-yellow-500 text-[10px] uppercase tracking-[0.2em] font-black hover:bg-yellow-500 hover:text-black transition-all rounded-xl shadow-lg shadow-yellow-500/5 group/btn flex items-center justify-center gap-2"
+                    >
+                        <span class="group-hover/btn:scale-110 transition-transform">Enrôler dans le Panier</span>
+                    </button>
                 </div>
-            </a>
+            </div>
         @empty
             <div class="col-span-full py-24 text-center border-2 border-dashed border-white/5 rounded-3xl">
                 <p class="text-gray-600 uppercase tracking-widest text-sm font-bold">Transmission interrompue : Aucun film trouvé</p>
@@ -74,4 +94,3 @@ new class extends Component
 
     </div>
 </div>
-
