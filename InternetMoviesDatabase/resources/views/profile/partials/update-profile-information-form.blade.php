@@ -1,54 +1,84 @@
 <section>
     <header>
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-            {{ __('Profile Information') }}
+        <h2 class="text-lg font-bold text-yellow-500 uppercase tracking-widest italic">
+            {{ __('Identification de l\'agent') }}
         </h2>
 
-        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            {{ __("Update your account's profile information and email address.") }}
+        <p class="mt-2 text-sm text-gray-500 font-light leading-relaxed">
+            {{ __("Mettez à jour les informations de votre profil et votre adresse de transmission (email).") }}
         </p>
     </header>
 
+    {{-- Formulaire caché pour la vérification --}}
     <form id="send-verification" method="post" action="{{ route('verification.send') }}">
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.update') }}" class="mt-8 space-y-6 max-w-xl">
         @csrf
         @method('patch')
 
+        {{-- Champ Nom --}}
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
+            <label for="name" class="block text-[10px] uppercase tracking-widest text-gray-600 font-bold mb-2">
+                {{ __('Nom de l\'agent') }}
+            </label>
+            <input 
+                id="name" 
+                name="name" 
+                type="text" 
+                class="block w-full bg-black border border-white/10 rounded-xl px-4 py-3 text-white focus:border-yellow-500/50 focus:ring-0 transition-all placeholder-gray-800" 
+                value="{{ old('name', $user->name) }}" 
+                required 
+                autofocus 
+                autocomplete="name" 
+            />
+            <x-input-error class="mt-2 text-red-500 text-[10px] uppercase font-bold tracking-widest" :messages="$errors->get('name')" />
         </div>
 
+        {{-- Champ Email --}}
         <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
-            <x-input-error class="mt-2" :messages="$errors->get('email')" />
+            <label for="email" class="block text-[10px] uppercase tracking-widest text-gray-600 font-bold mb-2">
+                {{ __('Canal de transmission (Email)') }}
+            </label>
+            <input 
+                id="email" 
+                name="email" 
+                type="email" 
+                class="block w-full bg-black border border-white/10 rounded-xl px-4 py-3 text-white focus:border-yellow-500/50 focus:ring-0 transition-all placeholder-gray-800" 
+                value="{{ old('email', $user->email) }}" 
+                required 
+                autocomplete="username" 
+            />
+            <x-input-error class="mt-2 text-red-500 text-[10px] uppercase font-bold tracking-widest" :messages="$errors->get('email')" />
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
-                <div>
-                    <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">
-                        {{ __('Your email address is unverified.') }}
+                <div class="mt-4 p-4 bg-yellow-500/5 border border-yellow-500/20 rounded-lg">
+                    <p class="text-[10px] uppercase tracking-widest text-yellow-500/70 font-bold">
+                        {{ __('Attention : Email non vérifié.') }}
 
-                        <button form="send-verification" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
-                            {{ __('Click here to re-send the verification email.') }}
+                        <button form="send-verification" class="block mt-2 underline text-yellow-500 hover:text-white transition-colors">
+                            {{ __('Renvoyer le code de vérification.') }}
                         </button>
                     </p>
 
                     @if (session('status') === 'verification-link-sent')
-                        <p class="mt-2 font-medium text-sm text-green-600 dark:text-green-400">
-                            {{ __('A new verification link has been sent to your email address.') }}
+                        <p class="mt-2 font-bold text-[10px] uppercase tracking-widest text-green-500">
+                            {{ __('Un nouveau lien a été envoyé vers votre terminal.') }}
                         </p>
                     @endif
                 </div>
             @endif
         </div>
 
-        <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+        <div class="flex items-center gap-6 pt-2">
+            {{-- Bouton Sauvegarder --}}
+            <button 
+                type="submit"
+                class="px-8 py-3 bg-yellow-500 text-black text-[10px] font-black uppercase tracking-widest rounded-xl shadow-[0_0_15px_rgba(234,179,8,0.2)] hover:bg-white hover:shadow-white/20 transition-all active:scale-95"
+            >
+                {{ __('Enregistrer') }}
+            </button>
 
             @if (session('status') === 'profile-updated')
                 <p
@@ -56,8 +86,8 @@
                     x-show="show"
                     x-transition
                     x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600 dark:text-gray-400"
-                >{{ __('Saved.') }}</p>
+                    class="text-[10px] font-bold uppercase tracking-[0.2em] text-yellow-500 italic"
+                >{{ __('Données synchronisées.') }}</p>
             @endif
         </div>
     </form>

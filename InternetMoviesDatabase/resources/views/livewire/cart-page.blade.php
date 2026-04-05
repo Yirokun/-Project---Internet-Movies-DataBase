@@ -46,7 +46,7 @@ new class extends Component {
     <div class="grid gap-6">
         @forelse($items as $item)
             <div wire:key="{{ $item->id }}" class="flex items-center gap-6 bg-[#0A0A0A] border border-white/5 p-5 rounded-2xl group hover:border-yellow-500/30 transition-all">
-                <img src="{{ asset($item->movie->image) }}" class="w-20 h-28 object-cover rounded-lg shadow-lg" alt="{{ $item->movie->title }}">
+                <img src="{{ $item->movie->image }}" class="w-20 h-28 object-cover rounded-lg shadow-lg" alt="{{ $item->movie->title }}">
                 
                 <div class="flex-1">
                     <h3 class="text-lg font-bold text-white uppercase">{{ $item->movie->title }}</h3>
