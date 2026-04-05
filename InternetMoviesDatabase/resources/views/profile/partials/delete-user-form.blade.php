@@ -9,7 +9,7 @@
         </p>
     </header>
 
-    {{-- Bouton d'ouverture (Style Danger Galactique) --}}
+    
     <button 
         x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"

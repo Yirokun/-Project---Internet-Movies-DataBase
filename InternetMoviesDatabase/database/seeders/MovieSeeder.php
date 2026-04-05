@@ -10,7 +10,6 @@ class MovieSeeder extends Seeder
 {
     public function run(): void
     {
-        // 1. On récupère le token depuis le .env
         $token = env('TMDB_TOKEN');
 
         if (!$token) {
@@ -18,7 +17,7 @@ class MovieSeeder extends Seeder
             return;
         }
 
-        // 2. IDs TMDB des films Star Wars (Saga principale + Side stories)
+        
         $tmdbIds = [
             11,     // Épisode IV : Un Nouvel Espoir
             1891,   // Épisode V : L'Empire Contre-Attaque
@@ -36,28 +35,27 @@ class MovieSeeder extends Seeder
         $this->command->info("Début de l'importation des films depuis TMDB...");
 
         foreach ($tmdbIds as $id) {
-            // Appel à l'API TMDB
+            // Appel à l'API
             $response = Http::withToken($token)
                 ->get("https://api.themoviedb.org/3/movie/{$id}?language=fr-FR&append_to_response=credits");
 
             if ($response->successful()) {
                 $data = $response->json();
 
-                // Extraction du réalisateur
+                
                 $director = collect($data['credits']['crew'])->firstWhere('job', 'Director')['name'] ?? 'George Lucas';
                 
-                // Extraction des 3 premiers acteurs
+               
                 $actors = collect($data['credits']['cast'])->take(3)->pluck('name')->implode(', ');
 
-                // Création du film dans ta base SQLite
-                // NOTE : Vérifie bien si ta migration utilise 'image' ou 'image_url'
+                
                 Movie::create([
                     'title'       => $data['title'],
                     'director'    => $director,
                     'actors'      => $actors,
                     'category'    => $data['genres'][0]['name'] ?? 'Science-Fiction',
                     'description' => $data['overview'] ?? 'Pas de description disponible.',
-                    'price'       => rand(14, 24) + 0.99, // Prix entre 14.99€ et 24.99€
+                    'price'       => rand(14, 24) + 0.99,
                     'image'       => 'https://image.tmdb.org/t/p/w500' . $data['poster_path'],
                 ]);
 
@@ -67,7 +65,7 @@ class MovieSeeder extends Seeder
             }
         }
 
-        $this->command->info("Terminé ! Ta base de données est à jour.");
+        $this->command->info("Terminé");
     }
 }
 

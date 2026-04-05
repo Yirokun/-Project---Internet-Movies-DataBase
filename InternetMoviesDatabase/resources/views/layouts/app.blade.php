@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
 <head>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>IMDB - EMPIRE EDITION</title>
@@ -9,7 +10,6 @@
 <body class="bg-[#050505] text-gray-200 font-sans antialiased">
     <nav class="border-b border-yellow-500/10 bg-black/50 backdrop-blur-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-8">
-            <!-- Logo -->
             <a href="{{ route('home') }}" class="text-2xl font-black text-yellow-500 tracking-[0.3em] italic shrink-0">
                 SW-IMDB
             </a>
@@ -30,10 +30,10 @@
                             <button @click="open = !open" @click.away="open = false" class="flex items-center gap-3 group">
                                 <div class="flex flex-col items-end">
                                     <span class="text-[10px] font-black uppercase tracking-widest text-white group-hover:text-yellow-500 transition-colors">
-                                        {{ Auth::user()->name }}
+                                        {{ Auth::user()?->name ?? 'Invité' }}
                                     </span>
                                 </div>
-                                {{-- Avatar ou Icône --}}
+                                
                                 <div class="w-8 h-8 rounded-full border border-yellow-500/30 flex items-center justify-center bg-yellow-500/10 group-hover:border-yellow-500 transition-all">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />

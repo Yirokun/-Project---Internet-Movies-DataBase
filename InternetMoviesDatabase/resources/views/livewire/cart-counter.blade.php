@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 
 new class extends Component {
     
-    // On écoute l'événement 'cart-updated' pour rafraîchir le chiffre
+   
     protected $listeners = ['cart-updated' => '$refresh'];
 
     public function with(): array

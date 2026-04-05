@@ -1,6 +1,6 @@
 <?php
 
-use Livewire\Volt\Component; // Assure-toi d'utiliser le bon namespace pour Volt
+use Livewire\Volt\Component;
 use App\Models\CartItem;
 use Illuminate\Support\Facades\Auth;
 
@@ -9,19 +9,19 @@ new class extends Component {
     // Action pour supprimer un article
     public function removeItem($id)
     {
-        // On sécurise la suppression en vérifiant l'appartenance à l'utilisateur
+        
         CartItem::where('id', $id)
             ->where('user_id', Auth::id())
             ->delete();
 
-        // Émet un événement pour mettre à jour d'autres composants (ex: compteur de nav)
+        
         $this->dispatch('cart-updated');
     }
 
-    // Fournit les données à la vue
+   
     public function with(): array
     {
-        // Eager loading de 'movie' pour optimiser les performances
+      
         $items = CartItem::where('user_id', Auth::id())
             ->with('movie')
             ->get();
@@ -40,7 +40,7 @@ new class extends Component {
 
 <div class="max-w-4xl mx-auto px-6 py-12">
     <h2 class="text-3xl font-black text-yellow-500 mb-10 uppercase tracking-widest italic border-b border-yellow-500/20 pb-4">
-        Inventaire de la Cargaison
+        Inventaire du Panier
     </h2>
 
     <div class="grid gap-6">

@@ -45,7 +45,6 @@ new class extends Component
 }; ?>
 
 <div>
-    {{-- On garde l'input ici si on veut une recherche locale, ou on le stylise pour la nav --}}
     <div class="mb-12">
         <input 
             wire:model.live.debounce.300ms="search" 
@@ -82,7 +81,7 @@ new class extends Component
                         wire:target="addToCart({{ $movie->id }})"
                         class="relative z-20 w-full mt-auto pt-4 text-[9px] uppercase tracking-[0.3em] font-black text-gray-500 hover:text-yellow-500 transition-colors flex items-center justify-center gap-2"
                     >
-                        <span wire:loading.remove wire:target="addToCart({{ $movie->id }})">+ Ajouter à la cargaison</span>
+                        <span wire:loading.remove wire:target="addToCart({{ $movie->id }})">+ Ajouter au panier</span>
                         <span wire:loading wire:target="addToCart({{ $movie->id }})">Synchronisation...</span>
                     </button>
                 </div>
