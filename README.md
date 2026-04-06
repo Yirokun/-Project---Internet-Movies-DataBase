@@ -106,27 +106,7 @@ bashnpm run build
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
-
-📁 Structure du projet
-InternetMoviesDatabase/
-├── app/
-│   ├── Http/
-│   │   ├── Controllers/     # Contrôleurs de l'application
-│   │   └── Middleware/      # Middlewares
-│   └── Models/              # Modèles Eloquent
-├── database/
-│   ├── migrations/          # Migrations de base de données
-│   └── seeders/             # Données de test
-├── resources/
-│   ├── views/               # Templates Blade
-│   ├── js/                  # Fichiers TypeScript / JavaScript
-│   └── css/                 # Feuilles de style
-├── routes/
-│   └── web.php              # Définition des routes
-├── public/                  # Point d'entrée & assets compilés
-├── .env.example             # Exemple de configuration
-├── composer.json            # Dépendances PHP
-└── package.json             # Dépendances JS
+php artisan migrate:fresh --seed
 
 ✨ Fonctionnalités
 
